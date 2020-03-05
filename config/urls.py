@@ -3,6 +3,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from django.views import defaults as default_views
+from django.views.generic import RedirectView
 from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
@@ -11,6 +12,12 @@ urlpatterns = [
     # User management
     path("users/", include("shareapp.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
+    # Prevent 404s for /favicon.ico if not taken care of in web server config
+    path(
+        "favicon.ico",
+        RedirectView.as_view(url="/static/images/favicons/favicon.ico", permanent=True),
+        name="favicon",
+    ),
     # Your stuff: custom urls includes go here
     path("", include("shareapp.main.urls", namespace="main")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -280,3 +280,6 @@ REST_FRAMEWORK = {
 }
 # Your stuff...
 # ------------------------------------------------------------------------------
+
+# Shared items will expire after this much time (in seconds) from their creation:
+SHARED_ITEM_EXPIRE_TIME = 24 * 3600

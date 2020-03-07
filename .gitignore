@@ -334,3 +334,7 @@ shareapp/media/
 .env
 .envs/*
 !.envs/.local/
+
+
+# Media files
+media/

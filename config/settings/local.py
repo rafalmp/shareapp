@@ -10,6 +10,13 @@ SECRET_KEY = env(
     "DJANGO_SECRET_KEY",
     default="lxkgO5S25SD35bOXDWNsPk2nKHfCftsmIV40TR5zvtDxDNAwlGLW0eBESOZmxVT9",
 )
+
+# https://github.com/nshafer/django-hashid-field#installation
+HASHID_FIELD_SALT = env(
+    "DJANGO_HASHID_FIELD_SALT",
+    default="=68afp#+8+n(kk@ynvonlq6(1w!!x7wm4655-bl*e29*@^=s1q",
+)
+
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1"]
 

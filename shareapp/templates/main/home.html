@@ -1,1 +1,29 @@
 {% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+  <h1 class="h3">{% trans "Your Shared Items:" %}</h1>
+  <table class="table">
+    <thead>
+    <tr>
+      <th class="text-center">{% trans "URL Address or File Name" %}</th>
+      <th class="text-center">{% trans "Secret Link" %}</th>
+      <th class="text-center">{% trans "Password" %}</th>
+      <th class="text-center">{% trans "Expires" %}</th>
+      <th class="text-center">{% trans "Views" %}</th>
+    </tr>
+    </thead>
+    <tbody>
+      {% for item in shared_items %}
+        <tr>
+          <td>{{ item|truncatechars:"50" }}</td>
+          <td>{{ request.build_absolute_uri }}{{ item.id }}</td>
+          <td>{{ item.password }}</td>
+          <td class="text-right">{{ item.expires }}</td>
+          <td class="text-right">{{ item.views }}</td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="5"><strong>{% trans "There are no items to display." %}</strong></td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

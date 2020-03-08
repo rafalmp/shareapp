@@ -2,6 +2,7 @@ import uuid
 
 import pytest
 from django.test import RequestFactory
+from faker import Faker
 
 from shareapp.users.models import User
 from shareapp.users.tests.factories import UserFactory
@@ -47,3 +48,8 @@ def auto_login_user(db, client, create_user, test_password):
         return client, user
 
     return make_auto_login
+
+
+@pytest.fixture
+def fake():
+    return Faker()

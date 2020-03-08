@@ -28,3 +28,7 @@ class FileForm(CrispyForm):
 
     def save(self, user: User) -> SharedItem:
         return SharedItem.objects.create(file=self.cleaned_data["file"], owner=user)
+
+
+class PasswordForm(CrispyForm):
+    password = forms.CharField(label=_("Password"), widget=forms.PasswordInput)

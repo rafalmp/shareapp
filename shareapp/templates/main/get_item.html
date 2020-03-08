@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load i18n crispy_forms_tags %}
+{% block content %}
+  {% if item.is_expired %}
+    <h1 class="h2 text-danger">{% trans "Item expired!" %}</h1>
+    <p>{% trans "We're sorry, that item has expired and can no longer be retrieved." %}</p>
+  {% else %}
+    <h1 class="h3">{% trans "Please enter password to access this content." %}</h1>
+    <div class="row">
+      <div class="col-md-8 offset-md-2">{% crispy form %}</div>
+    </div>
+  {% endif %}
+{% endblock %}

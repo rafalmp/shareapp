@@ -42,6 +42,10 @@ class SharedItem(models.Model):
     expires = models.DateTimeField(_("Expires"), default=make_expire_timestamp)
     views = models.IntegerField(_("Number of views"), default=0)
 
+    @property
+    def is_expired(self):
+        return self.expires < now()
+
     def __str__(self):
         return self.url or self.file.name.rsplit("/")[-1]
 

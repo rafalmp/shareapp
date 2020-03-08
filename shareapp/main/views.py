@@ -1,10 +1,12 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpRequest, FileResponse
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import FormView, ListView
+from django.views.generic import FormView, ListView, DetailView
 
-from shareapp.main.forms import UrlForm, FileForm
+from shareapp.main.forms import UrlForm, FileForm, PasswordForm
 from shareapp.main.models import SharedItem
 
 
@@ -48,3 +50,33 @@ class AddFileView(AddItemView):
 
 
 add_file_view = AddFileView.as_view()
+
+
+class RetrieveItemView(DetailView):
+    template_name = "main/get_item.html"
+    model = SharedItem
+    context_object_name = "item"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = PasswordForm()
+        return context
+
+    def post(self, request, **kwargs):
+        password = request.POST.get("password", "").strip()
+        item: SharedItem = self.get_object()
+
+        if password != item.password:
+            messages.error(
+                request, _("The password you provided is incorrect. Access denied.")
+            )
+            return redirect(request.path_info)
+        elif item.is_expired:
+            return redirect(request.path_info)
+        elif item.url:
+            return redirect(item.url)
+        else:
+            return FileResponse(item.file, as_attachment=True)
+
+
+retrieve_item_view = RetrieveItemView.as_view()

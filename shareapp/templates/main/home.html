@@ -33,7 +33,7 @@
   <div class="text-center">
 {#    <div class="col text-center">#}
       <a class="btn btn-info" href="{% url 'main:new_url' %}">{% trans "Add URL" %}</a>
-      <a class="btn btn-info">{% trans "Add File" %}</a>
+      <a class="btn btn-info" href="{% url 'main:new_file' %}">{% trans "Add File" %}</a>
 {#    </div>#}
   </div>
 {% endblock %}

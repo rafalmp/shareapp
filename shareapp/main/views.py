@@ -1,12 +1,12 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpRequest, FileResponse
+from django.http import FileResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import FormView, ListView, DetailView
+from django.views.generic import DetailView, FormView, ListView
 
-from shareapp.main.forms import UrlForm, FileForm, PasswordForm
+from shareapp.main.forms import FileForm, PasswordForm, UrlForm
 from shareapp.main.models import SharedItem
 
 

@@ -22,11 +22,10 @@ class TestHomeView:
         assertTemplateUsed(response, "main/home.html")
 
 
-class TestFaviconFixView:
-    def test_favicon_redirect(self, client):
-        response = client.get("/favicon.ico")
-        assert response.status_code == 301
-        assert "/static/images/favicons/favicon.ico" in response.url
+def test_favicon_redirect(client):
+    response = client.get("/favicon.ico")
+    assert response.status_code == 301
+    assert "/static/images/favicons/favicon.ico" in response.url
 
 
 def test_add_url_view(auto_login_user, fake):

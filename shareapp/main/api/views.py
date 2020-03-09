@@ -6,8 +6,8 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.status import HTTP_403_FORBIDDEN
 
-from shareapp.main.api.serializers import SharedItemSerializer
-from shareapp.main.models import SharedItem, item_retrieved
+from shareapp.main.api.serializers import SharedItemSerializer, RetrievalSerializer
+from shareapp.main.models import SharedItem, item_retrieved, Retrieval
 
 
 class SharedItemViewSet(viewsets.ModelViewSet):
@@ -51,3 +51,18 @@ class SharedItemRetrieveViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewS
             return HttpResponseRedirect(item.url)
         else:
             return FileResponse(item.file, as_attachment=True)
+
+
+class StatsViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    serializer_class = RetrievalSerializer
+    permission_classes = [IsAuthenticated]
+    queryset = Retrieval.objects.all().order_by("created")
+
+    def list(self, request, *args, **kwargs):
+        data = {}
+        for item in self.queryset.filter(user=self.request.user):
+            data[item.created.strftime("%Y-%m-%d")] = {
+                "files": item.files,
+                "links": item.links,
+            }
+        return Response(data=data)

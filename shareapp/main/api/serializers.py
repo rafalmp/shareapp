@@ -1,7 +1,7 @@
 from hashid_field.rest import HashidSerializerCharField
 from rest_framework import serializers
 
-from shareapp.main.models import SharedItem
+from shareapp.main.models import SharedItem, Retrieval
 
 
 class FileWithoutPathField(serializers.FileField):
@@ -26,3 +26,9 @@ class SharedItemSerializer(serializers.ModelSerializer):
         model = SharedItem
         fields = ["id", "password", "url", "file", "expires", "views"]
         read_only_fields = ["expires", "views", "password"]
+
+
+class RetrievalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Retrieval
+        fields = "__all__"

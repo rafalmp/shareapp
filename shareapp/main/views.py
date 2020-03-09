@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import DetailView, FormView, ListView
 
 from shareapp.main.forms import FileForm, PasswordForm, UrlForm
-from shareapp.main.models import SharedItem
+from shareapp.main.models import SharedItem, item_retrieved
 
 
 class HomeView(LoginRequiredMixin, ListView):
@@ -73,7 +73,12 @@ class RetrieveItemView(DetailView):
             return redirect(request.path_info)
         elif item.is_expired:
             return redirect(request.path_info)
-        elif item.url:
+        else:
+            return self.handle_retrieval(item)
+
+    def handle_retrieval(self, item: SharedItem):
+        item_retrieved.send(sender=self.__class__, item_id=item.id)
+        if item.url:
             return redirect(item.url)
         else:
             return FileResponse(item.file, as_attachment=True)

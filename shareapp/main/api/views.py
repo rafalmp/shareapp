@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.status import HTTP_403_FORBIDDEN
 
 from shareapp.main.api.serializers import SharedItemSerializer
-from shareapp.main.models import SharedItem
+from shareapp.main.models import SharedItem, item_retrieved
 
 
 class SharedItemViewSet(viewsets.ModelViewSet):
@@ -42,7 +42,12 @@ class SharedItemRetrieveViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewS
             return Response(
                 data={"details": _("This item has expired.")}, status=HTTP_403_FORBIDDEN
             )
-        elif item.url:
+        else:
+            return self.handle_retrieval(item)
+
+    def handle_retrieval(self, item: SharedItem):
+        item_retrieved.send(sender=self.__class__, item_id=item.id)
+        if item.url:
             return HttpResponseRedirect(item.url)
         else:
             return FileResponse(item.file, as_attachment=True)

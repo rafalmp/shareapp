@@ -1,6 +1,6 @@
 from django.core.files.uploadedfile import SimpleUploadedFile
 
-from shareapp.main.forms import UrlForm, FileForm
+from shareapp.main.forms import FileForm, UrlForm
 from shareapp.main.models import SharedItem
 
 

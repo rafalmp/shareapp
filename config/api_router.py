@@ -1,8 +1,8 @@
 from rest_framework.routers import DefaultRouter
 
 from shareapp.main.api.views import (
-    SharedItemViewSet,
     SharedItemRetrieveViewSet,
+    SharedItemViewSet,
     StatsViewSet,
 )
 

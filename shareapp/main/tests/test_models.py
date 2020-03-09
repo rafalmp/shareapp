@@ -4,8 +4,8 @@ from unittest import mock
 from django.utils.timezone import now
 
 from shareapp.main.models import (
-    make_expire_timestamp,
     SharedItem,
+    make_expire_timestamp,
     make_file_path,
     make_random_password,
 )

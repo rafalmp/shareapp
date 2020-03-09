@@ -1,9 +1,9 @@
 from django.urls import path
 
 from shareapp.main.views import (
-    home_view,
-    add_url_view,
     add_file_view,
+    add_url_view,
+    home_view,
     retrieve_item_view,
 )
 
